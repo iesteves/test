@@ -15,6 +15,8 @@ class Urlstats:
 		self.Totalresponsetime += Response
 		self.Median.append( Response )
 		self.Mode[Response] += 1
+		dyno = a[7].split( "=" )[1]
+		self.dyno[dyno] += 1
 
 def median(a):
 	b = sorted(a)
@@ -50,5 +52,6 @@ if __name__ == "__main__":
 				
 		for _Url, Stats in Url.iteritems():
 			Mode = sorted(Stats.Mode, key=Stats.Mode.__getitem__, reverse=True )[0]
-			print "{} {} {:.1f} {} {}".format( _Url, Stats.Called, float( Stats.Totalresponsetime )/
-				Stats.Called, median( Stats.Median ), Mode )
+			dyno = sorted(Stats.dyno, key=Stats.dyno.__getitem__, reverse=True )[0]
+			print "{} {} {:.1f} {} {} {}".format( _Url, Stats.Called, float( Stats.Totalresponsetime )/
+				Stats.Called, median( Stats.Median ), Mode, dyno )
